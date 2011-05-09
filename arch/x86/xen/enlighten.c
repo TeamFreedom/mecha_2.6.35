@@ -1004,6 +1004,10 @@ static void xen_reboot(int reason)
 	smp_send_stop();
 #endif
 
+#ifdef CONFIG_SMP
+	stop_other_cpus();
+#endif
+
 	if (HYPERVISOR_sched_op(SCHEDOP_shutdown, &r))
 		BUG();
 }
