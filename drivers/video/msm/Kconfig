@@ -63,12 +63,6 @@ config GPU_MSM_KGSL_ADRENO205
           chips.
 
 
-config MSM_KGSL_2D
-	bool "Enable the 2D core. Required for OpenVG"
-	default y
-	depends on GPU_MSM_KGSL && GPU_MSM_KGSL_ADRENO205
-
-
 config MSM_ROTATOR
         tristate "MSM Offline Image Rotator Driver"
         depends on ARCH_MSM7X30 && ANDROID_PMEM
