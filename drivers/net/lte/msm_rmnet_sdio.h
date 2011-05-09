@@ -1,4 +1,4 @@
-/* Copyright (c) 2002,2007-2010, Code Aurora Forum. All rights reserved.
+/* Copyright (c) 2010, Code Aurora Forum. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are
@@ -24,58 +24,20 @@
  * WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE
  * OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN
  * IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- *
  */
-#ifndef __GSL_DRAWCTXT_G12_H
-#define __GSL_DRAWCTXT_G12_H
 
-#include "kgsl_sharedmem.h"
+#include <linux/types.h>
+#include <linux/skbuff.h>
 
-struct kgsl_device;
+#ifndef _MSM_RMNET_SDIO_H
+#define _MSM_RMNET_SDIO_H
 
-#define GSL_HAL_NUMCMDBUFFERS       5
-#define GSL_HAL_CMDBUFFERSIZE       ((1024 + 13) * sizeof(unsigned int))
+int msm_rmnet_sdio_open(uint32_t id, void *priv,
+			void (*receive_cb)(void *, struct sk_buff *),
+			void (*write_done)(void *, struct sk_buff *));
 
-#define ALIGN_IN_BYTES(dim, alignment) (((dim) + (alignment - 1)) & \
-		~(alignment - 1))
+int msm_rmnet_sdio_close(uint32_t id);
 
+int msm_rmnet_sdio_write(uint32_t id, struct sk_buff *skb);
 
-#define NUMTEXUNITS             4
-#define TEXUNITREGCOUNT         25
-#define VG_REGCOUNT             0x39
-
-#define PACKETSIZE_BEGIN        3
-#define PACKETSIZE_G2DCOLOR     2
-#define PACKETSIZE_TEXUNIT      (TEXUNITREGCOUNT * 2)
-#define PACKETSIZE_REG          (VG_REGCOUNT * 2)
-#define PACKETSIZE_STATE        (PACKETSIZE_TEXUNIT * NUMTEXUNITS + \
-				 PACKETSIZE_REG + PACKETSIZE_BEGIN + \
-				 PACKETSIZE_G2DCOLOR)
-#define PACKETSIZE_STATESTREAM  (ALIGN_IN_BYTES((PACKETSIZE_STATE * \
-				 sizeof(unsigned int)), 32) / \
-				 sizeof(unsigned int))
-#define KGSL_G12_CONTEXT_MAX 16
-
-struct kgsl_g12_z1xx {
-	unsigned int offs;
-	unsigned int curr;
-	unsigned int prevctx;
-
-	unsigned int            *cmdbuf[GSL_HAL_NUMCMDBUFFERS];
-	struct kgsl_memdesc      cmdbufdesc[GSL_HAL_NUMCMDBUFFERS];
-
-	unsigned int numcontext;
-};
-
-extern struct kgsl_g12_z1xx g_z1xx;
-
-int
-kgsl_g12_drawctxt_create(struct kgsl_device *device,
-			uint32_t ctxt_id_mask,
-			unsigned int *drawctxt_id);
-
-int
-kgsl_g12_drawctxt_destroy(struct kgsl_device *device,
-			unsigned int drawctxt_id);
-
-#endif  /* __GSL_DRAWCTXT_H */
+#endif /* _MSM_RMNET_SDIO_H */
