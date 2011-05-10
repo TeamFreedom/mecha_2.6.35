@@ -1,8 +1,8 @@
-/* This file is auto generated, version 0 */
+/* This file is auto generated, version 2 */
 /*  PREEMPT */
 #define UTS_MACHINE "arm"
-#define UTS_VERSION "#0 PREEMPT Mon May 9 17:01:41 EDT 2011"
-#define LINUX_COMPILE_TIME "17:01:41"
+#define UTS_VERSION "#2 PREEMPT Mon May 9 19:30:11 EDT 2011"
+#define LINUX_COMPILE_TIME "19:30:11"
 #define LINUX_COMPILE_BY "jdkoreclipse"
 #define LINUX_COMPILE_HOST "TeamFreedom"
 #define LINUX_COMPILE_DOMAIN "home"
